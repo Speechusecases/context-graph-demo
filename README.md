@@ -98,9 +98,9 @@ Combine semantic similarity (text embeddings) with structural similarity (FastRP
 
 ```
 ┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│   Next.js UI    │────▶│  FastAPI + SDK  │────▶│  Neo4j + GDS    │
-│  Chakra UI v3   │     │  Claude Agent   │     │  Vector Search  │
-│  NVL Graphs     │     │  10 MCP Tools   │     │  FastRP/KNN     │
+│   Next.js UI    │────▶│ FastAPI+Strands │────▶│  Neo4j + GDS    │
+│  Chakra UI v3   │     │  Strands Agent  │     │  Vector Search  │
+│  NVL Graphs     │     │   12 Tools      │     │  FastRP/KNN     │
 └─────────────────┘     └─────────────────┘     └─────────────────┘
 ```
 
@@ -126,7 +126,7 @@ NEO4J_URI=neo4j+s://xxxx.databases.neo4j.io
 NEO4J_USERNAME=neo4j
 NEO4J_PASSWORD=your_neo4j_password
 
-# Anthropic API Key (for Claude Agent SDK)
+# Anthropic API Key (used by Strands Agents' Anthropic model provider)
 ANTHROPIC_API_KEY=your_anthropic_key
 
 # OpenAI API Key (for text embeddings)
@@ -269,7 +269,7 @@ context-graph/
 ├── backend/
 │   ├── app/
 │   │   ├── main.py              # FastAPI application
-│   │   ├── agent.py             # Claude Agent SDK with MCP tools
+│   │   ├── agent.py             # Strands Agents with context-graph tools
 │   │   ├── context_graph_client.py  # Neo4j operations
 │   │   ├── gds_client.py        # GDS algorithms
 │   │   ├── vector_client.py     # Vector search
@@ -291,9 +291,9 @@ context-graph/
 └── .env                         # Environment variables
 ```
 
-## Agent Tools (MCP)
+## Agent Tools
 
-The Claude Agent has access to 10 custom tools:
+The Strands Agent has access to 12 custom tools:
 
 | Tool | Description |
 |------|-------------|
@@ -304,6 +304,8 @@ The Claude Agent has access to 10 custom tools:
 | `get_causal_chain` | Trace causes and effects of a decision |
 | `record_decision` | Create new decision trace with reasoning |
 | `detect_fraud_patterns` | Graph-based fraud analysis |
+| `find_decision_community` | Leiden community detection over decisions |
+| `find_accounts_with_high_shared_transaction_volume` | Shared-volume account analysis |
 | `get_policy` | Get current policy rules |
 | `execute_cypher` | Read-only Cypher for custom analysis |
 | `get_schema` | Retrieve the current Neo4j schema |
@@ -359,7 +361,7 @@ ORDER BY combined_score DESC
 ## References
 
 - [AI's Trillion-Dollar Opportunity: Context Graphs](https://foundationcapital.com/context-graphs-ais-trillion-dollar-opportunity/) - Foundation Capital
-- [Claude Agent SDK](https://github.com/anthropics/claude-agent-sdk-python)
+- [Strands Agents SDK](https://github.com/strands-agents/sdk-python)
 - [NVL Visualization Library](https://neo4j.com/docs/nvl/)
 
 ## License
